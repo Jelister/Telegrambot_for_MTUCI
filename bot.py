@@ -1,16 +1,18 @@
 from datetime import *
-from psycopg2 import *
 import requests
 from telebot import *
 
-bot = telebot.TeleBot('5193669675:AAEjyKGLD_jnyYeOJBfeTlLVxvGreu3vitM')#ключ к тг боту
+bot = TeleBot('5193669675:AAEjyKGLD_jnyYeOJBfeTlLVxvGreu3vitM')#ключ к тг боту
 key = '28b81a31ff024511211cc73d800c084c'#ключ к openweather
 city = 'Moscow,RU'#город для openweather вместо координат
 
 def WeatherBot(x):#функция, выдающая погоду на неделю
-    res = requests.get("http://api.openweathermap.org/data/2.5/forecast",params={'q':city,'units':'metric','cnt':10,'lang':'ru','APPID':key})#делает запрос к сайту openweather с определенными параметрами
+    res = requests.get("http://api.openweathermap.org/data/2.5/forecast",params={'q':city,'units':'metric','cnt':x,'lang':'ru','APPID':key})#делает запрос к сайту openweather с определенными параметрами
+    #res = requests.get(f"https://api.openweathermap.org/data/2.5/onecall?lat={55}&lon={37}&exclude=daily&cnt=7&units=metric&appid={key}")
     data = res.json()#переводит данные с запроса в json файл
-    answer = 'Город: '+str(data['city']['name'])+'\n\n'#создается переменная answer, в которую потом будут записываться значения
+    print(res)
+    print(data)
+    answer = 'Город: Москва\n\n'#создается переменная answer, в которую потом будут записываться значения
     if x == 1:
         pass
     else:
@@ -219,14 +221,47 @@ def coverterNUMtoDAY(today):#переводит цифру в день неде�
 def Program(x):
     if x == 1:
         answer = 'Расписание на сегодня:\n\n'#создаёт переменную answer и добавляет контекст для расписания на 1 день при условии, что x = 1
+    elif x ==2 or x ==3 or x ==4:
+        answer = 'Расписание на '+str(x)+' дня:\n\n\n'
     else:
-        answer = 'Расписание на неделю:\n\n\n'#так же создаёт переменную answer, но добавляет контекст для расписания на неделю
+        answer = 'Расписание на '+str(x)+' дней:\n\n\n'#так же создаёт переменную answer, но добавляет контекст для расписания на неделю
     today = datetime.now()#вычисляет сегоднящний день
     for i in range(x):
         answer+=str(raspisanie(today))#обращается к расписанию и добавляет к переменной answer расписание на день today
         answer+='\n\n'#добаввляет пропуски строки для упрощения понимания ответа (персонально)
         today+=timedelta(days=1)#увеличивает переменную today на 1 день
     return answer#возвращает целостное расписание на 7 дней
+"""
+cater = None
+@bot.message_handler(commands=["обновить"])#просто заменил команду /start на команду /обновить
+def start(m, res = False):
+    markup = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
+    itembtn1 = types.KeyboardButton('/Расписание')
+    itembtn2 = types.KeyboardButton('/Прогноз')
+    itembtn3 = types.KeyboardButton('/обновить')
+    markup.add(itembtn1, itembtn2, itembtn3)
+    bot.send_message(m.chat.id, text="Здравствуйте. Список доступных команд на данный момент:\n1)/Расписание;\n2)/Прогноз;\n3)/обновить.\nЕсли что-то не работает или не отображается,\nнажмите /обновить!", reply_markup=markup)
+
+@bot.message_handler(commands=["Расписание"])
+def rasp(m, res = False):
+    cater = 'Raspis'
+    bot.send_message(m.chat.id, text="На сколько дней Вы\nхотите увидеть расписание? Введи цифру от 1 до 15")
+
+@bot.message_handler(commands=["Прогноз"])
+def rasp(m, res = False):
+    cater = 'Prognz'
+    bot.send_message(m.chat.id, text="На сколько дней Вы\nхотите увидеть прогноз? Введи цифру от 1 до 15")
+
+@bot.message_handler(func=lambda m: True)
+def echo_all(message):
+    if cater == 'Raspis':
+        bot.reply_to(message, Program(message.text))
+    elif cater == 'Prognz':
+        bot.reply_to(message, WeatherBot(message.text))
+    else:
+        bot.reply_to(message, 'Ошибка. Не получилось.')#нихуя не работает!!!
+
+"""
 
 @bot.message_handler(commands=["обновить"])#просто заменил команду /start на команду /обновить
 def start(m, res = False):
