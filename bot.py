@@ -1,4 +1,5 @@
 from datetime import *
+import psycopg2
 import requests
 from telebot import *
 
@@ -27,7 +28,7 @@ def WeatherBot(x):#функция, выдающая погоду на недел
         today+= timedelta(days=1)#прибавляет к текущей дате 1 день
     return answer
 
-def raspisanie(today):# огромная функция, которая представляет из себя рассписание, которое можно было реализовать через какую-нибудь субд, например, postgresql, но я сделал это расписание ещё 11 февраля
+def raspisanie(today):# огромная функция, которая представляет из себя рассписание, которое можно было реализовать через какую-нибудь субд, например, postgresql, но я сделал это расписание ещё 11 февраля, so..
     week = WeekLooker(today)
     day = today.strftime('%A')
     day = coverterDAYtoNUM(day)
@@ -178,6 +179,46 @@ def raspisanie(today):# огромная функция, которая пред
         else:
             return "Ошибка."
 
+def raspisanie_sql(today):
+    week = WeekLooker(today)
+    day = today.strftime('%A')
+    day = coverterDAYtoNUM(day)
+    con_sql = psycopg2.connect("dbname=admin user=postgres")
+    cur_sql = con_sql.cursor()
+    
+    if week == 1:
+    	if day == 1:
+    		return(cur.execute("SELECT md1 FROM book"))
+    	elif day == 2:
+    		return(cur.execute("SELECT tu1 FROM book"))
+    	elif day == 3:
+    		return(cur.execute("SELECT wd1 FROM book"))
+    	elif day == 4:
+    		return(cur.execute("SELECT th1 FROM book"))
+    	elif day == 5:
+    		return(cur.execute("SELECT fd1 FROM book"))
+    	elif day == 6:
+    		return(cur.execute("SELECT sd1 FROM book"))
+    	elif day == 7:
+    		return(cur.execute("SELECT sun FROM book"))
+    elif week == 2:
+    	if day == 1:
+    		return(cur.execute("SELECT md2 FROM book"))
+    	elif day == 2:
+    		return(cur.execute("SELECT tu2 FROM book"))
+    	elif day == 3:
+    		return(cur.execute("SELECT wd2 FROM book"))
+    	elif day == 4:
+    		return(cur.execute("SELECT th2 FROM book"))
+    	elif day == 5:
+    		return(cur.execute("SELECT fd2 FROM book"))
+    	elif day == 6:
+    		return(cur.execute("SELECT sd2 FROM book"))
+    	elif day == 7:
+    		return(cur.execute("SELECT sun FROM book"))
+    	
+    	
+
 def WeekLooker(today):#функция, определяющая четность\нечетность недели относительно превой недели. Возвращает 1 или 2
     while today > datetime(2022, 2, 14):
         today -= timedelta(weeks = 2)
@@ -227,7 +268,7 @@ def Program(x):
         answer = 'Расписание на '+str(x)+' дней:\n\n\n'#так же создаёт переменную answer, но добавляет контекст для расписания на неделю
     today = datetime.now()#вычисляет сегоднящний день
     for i in range(x):
-        answer+=str(raspisanie(today))#обращается к расписанию и добавляет к переменной answer расписание на день today
+        answer+=str(raspisanie_sql(today))#обращается к расписанию и добавляет к переменной answer расписание на день today
         answer+='\n\n'#добаввляет пропуски строки для упрощения понимания ответа (персонально)
         today+=timedelta(days=1)#увеличивает переменную today на 1 день
     return answer#возвращает целостное расписание на 7 дней
