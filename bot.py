@@ -192,51 +192,45 @@ def raspisanie_sql(today):
     week = WeekLooker(today)
     day = today.strftime('%A')
     day = coverterDAYtoNUM(day)
+    answer = None
 
     if week == 1:
         if day == 1:
             cur_sql.execute("SELECT md1 FROM book")
-            return(cur_sql.fetchall())
         elif day == 2:
             cur_sql.execute("SELECT tu1 FROM book")
-            return(cur_sql.fetchall())
         elif day == 3:
             cur_sql.execute("SELECT wd1 FROM book")
-            return(cur_sql.fetchall())
         elif day == 4:
             cur_sql.execute("SELECT th1 FROM book")
-            return(cur_sql.fetchall())
         elif day == 5:
             cur_sql.execute("SELECT fd1 FROM book")
-            return(cur_sql.fetchall())
         elif day == 6:
             cur_sql.execute("SELECT sd1 FROM book")
-            return(cur_sql.fetchall())
         elif day == 7:
             cur_sql.execute("SELECT sud FROM book")
-            return(cur_sql.fetchall())
     elif week == 2:
         if day == 1:
             cur_sql.execute("SELECT md2 FROM book")
-            return(cur_sql.fetchall())
         elif day == 2:
             cur_sql.execute("SELECT tu2 FROM book")
-            return(cur_sql.fetchall())
         elif day == 3:
             cur_sql.execute("SELECT wd2 FROM book")
-            return(cur_sql.fetchall())
         elif day == 4:
             cur_sql.execute("SELECT th2 FROM book")
-            return(cur_sql.fetchall())
         elif day == 5:
             cur_sql.execute("SELECT fd2 FROM book")
-            return(cur_sql.fetchall())
         elif day == 6:
             cur_sql.execute("SELECT sd2 FROM book")
-            return(cur_sql.fetchall())
         elif day == 7:
             cur_sql.execute("SELECT sud FROM book")
-            return(cur_sql.fetchall())
+    answer_help = cur_sql.fetchall()
+    answer = None
+    for i in range(len(answer_help)):
+        c=str(a[i])
+        c = c[2:-3]
+        answer+=str(c)+'\n'
+    return(answer)
 
 
 def WeekLooker(
