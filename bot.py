@@ -192,7 +192,6 @@ def raspisanie_sql(today):
     week = WeekLooker(today)
     day = today.strftime('%A')
     day = coverterDAYtoNUM(day)
-    answer = None
 
     if week == 1:
         if day == 1:
@@ -225,9 +224,9 @@ def raspisanie_sql(today):
         elif day == 7:
             cur_sql.execute("SELECT sud FROM book")
     answer_help = cur_sql.fetchall()
-    answer = None
+    answer = ''
     for i in range(len(answer_help)):
-        c=str(a[i])
+        c=str(answer_help[i])
         c = c[2:-3]
         answer+=str(c)+'\n'
     return(answer)
