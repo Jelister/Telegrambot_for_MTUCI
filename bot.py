@@ -223,12 +223,21 @@ def raspisanie_sql(today):
             cur_sql.execute("SELECT sd2 FROM book")
         elif day == 7:
             cur_sql.execute("SELECT sud FROM book")
+    answer = str(coverterNUMtoDAY(day))+', '
+    if week == 1:
+        answer+='нечётная неделя.\n'
+    else:
+        answer+='чётная неделя.\n'
     answer_help = cur_sql.fetchall()
-    answer = ''
     for i in range(len(answer_help)):
         c=str(answer_help[i])
         c = c[2:-3]
-        answer+=str(c)+'\n'
+        answer+=f'X{i}'+str(c)+'\n'
+        answer = answer.replace('X0', '9:30-11:05 - ')
+        answer = answer.replace('X1', '11:20-12:55 - ')
+        answer = answer.replace('X2', '13:10-14:45 - ')
+        answer = answer.replace('X3', '15:25-17:00 - ')
+        answer = answer.replace('X4', '17:15-18:50 - ')
     return(answer)
 
 
