@@ -3,8 +3,8 @@ import psycopg2
 import requests
 from telebot import *
 
-bot = TeleBot('5193669675:AAEjyKGLD_jnyYeOJBfeTlLVxvGreu3vitM')  # ключ к тг боту
-key = '28b81a31ff024511211cc73d800c084c'  # ключ к openweather
+bot = TeleBot('')  # ключ к тг боту
+key = ''  # ключ к openweather
 city = 'Moscow,RU'  # город для openweather вместо координат
 
 
