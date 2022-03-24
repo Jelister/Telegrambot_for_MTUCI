@@ -3,8 +3,8 @@ import psycopg2
 import requests
 from telebot import *
 
-bot = TeleBot('')  # ключ к тг боту
-key = ''  # ключ к openweather
+bot = TeleBot(str(input('Введите API-ключ для телеграм-бота: ')))  # ключ к тг боту
+key = str(input('\nВведите API-ключ сервиса OpenWeather: '))  # ключ к openweather
 city = 'Moscow,RU'  # город для openweather вместо координат
 
 
