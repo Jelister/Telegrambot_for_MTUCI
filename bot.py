@@ -298,39 +298,6 @@ def Program(x):
     return answer  # возвращает целостное расписание на 7 дней
 
 
-"""
-cater = None
-@bot.message_handler(commands=["обновить"])#просто заменил команду /start на команду /обновить
-def start(m, res = False):
-    markup = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
-    itembtn1 = types.KeyboardButton('/Расписание')
-    itembtn2 = types.KeyboardButton('/Прогноз')
-    itembtn3 = types.KeyboardButton('/обновить')
-    markup.add(itembtn1, itembtn2, itembtn3)
-    bot.send_message(m.chat.id, text="Здравствуйте. Список доступных команд на данный момент:\n1)/Расписание;\n2)/Прогноз;\n3)/обновить.\nЕсли что-то не работает или не отображается,\nнажмите /обновить!", reply_markup=markup)
-
-@bot.message_handler(commands=["Расписание"])
-def rasp(m, res = False):
-    cater = 'Raspis'
-    bot.send_message(m.chat.id, text="На сколько дней Вы\nхотите увидеть расписание? Введи цифру от 1 до 15")
-
-@bot.message_handler(commands=["Прогноз"])
-def rasp(m, res = False):
-    cater = 'Prognz'
-    bot.send_message(m.chat.id, text="На сколько дней Вы\nхотите увидеть прогноз? Введи цифру от 1 до 15")
-
-@bot.message_handler(func=lambda m: True)
-def echo_all(message):
-    if cater == 'Raspis':
-        bot.reply_to(message, Program(message.text))
-    elif cater == 'Prognz':
-        bot.reply_to(message, WeatherBot(message.text))
-    else:
-        bot.reply_to(message, 'Ошибка. Не получилось.')#нихуя не работает!!!
-
-"""
-
-
 @bot.message_handler(commands=["обновить"])  # просто заменил команду /start на команду /обновить
 def start(m, res=False):
     markup = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
