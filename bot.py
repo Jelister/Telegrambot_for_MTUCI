@@ -298,7 +298,7 @@ def Program(x):
     return answer  # возвращает целостное расписание на 7 дней
 
 
-@bot.message_handler(commands=["обновить"])  # просто заменил команду /start на команду /обновить
+@bot.message_handler(commands=["обновить", "start"])
 def start(m, res=False):
     markup = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
     itembtn1 = types.KeyboardButton('Расписание на неделю')
